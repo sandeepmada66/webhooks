@@ -8,7 +8,7 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 webhook_endpoint = "/webhook"
-data_endpoint = "/data"
+# data_endpoint = "/data"
 
 last_data = None
 
@@ -18,30 +18,18 @@ def webhook():
     data = request.get_json()
 
     try:
-        # Check if there is a change in the data
-        if data != last_data:
-            last_data = data
             print("Data has changed:")
-            print(json.dumps(data, indent=2))
+            print(json.dumps(data))
 
             # You can access specific values from the data
-            key_value = data.get("user")
-            print("Value of 'user':", key_value)
-
-            return jsonify({"status": "success"})
+            for each_data in data:
+                key_value = each_data.get("user")
+                print("Value of 'user':", key_value)
 
     except Exception as e:
         print("Error:", e)
 
-    return jsonify({"status": "failed"})
-
-@app.route(data_endpoint, methods=['GET'])
-def get_data():
-    global last_data
-    return jsonify(last_data)
-
-# if __name__ == '__main__':
-#     app.run(debug=True)
+    return jsonify({"status": "Data posted"})
 
 
 if __name__ == '__main__':
