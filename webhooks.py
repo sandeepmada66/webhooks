@@ -1,3 +1,55 @@
+import requests
+from flask import Flask, request, jsonify
+import json
+app = Flask(__name__)
+
+# Define your webhook endpoint
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+webhook_endpoint = "/webhook"
+data_endpoint = "/data"
+
+last_data = None
+
+@app.route(webhook_endpoint, methods=['POST'])
+def webhook():
+    global last_data
+    data = request.get_json()
+
+    try:
+        # Check if there is a change in the data
+        if data != last_data:
+            last_data = data
+            print("Data has changed:")
+            print(json.dumps(data, indent=2))
+
+            # You can access specific values from the data
+            key_value = data.get("user")
+            print("Value of 'user':", key_value)
+
+            return jsonify({"status": "success"})
+
+    except Exception as e:
+        print("Error:", e)
+
+    return jsonify({"status": "failed"})
+
+@app.route(data_endpoint, methods=['GET'])
+def get_data():
+    global last_data
+    return jsonify(last_data)
+
+# if __name__ == '__main__':
+#     app.run(debug=True)
+
+
+if __name__ == '__main__':
+    
+    app.run(debug=True, port=5000)
+
+
+
 # # import requests
 # import json
 # # from flask import Flask, request
@@ -46,8 +98,7 @@
 # # if __name__ == '__main__':
 # #     # Start the Flask app to receive webhook notifications
 # #     app.run(port=5000)
-import requests
-from flask import Flask, request, jsonify
+
 
 # app = Flask(__name__)
 
@@ -90,50 +141,3 @@ from flask import Flask, request, jsonify
 #     app.run(debug=True)
 
 # from flask import Flask, request, jsonify
-import json
-app = Flask(__name__)
-
-# Define your webhook endpoint
-from flask import Flask, request, jsonify
-
-app = Flask(__name__)
-webhook_endpoint = "/webhook"
-data_endpoint = "/data"
-
-last_data = None
-
-@app.route(webhook_endpoint, methods=['POST'])
-def webhook():
-    global last_data
-    data = request.get_json()
-
-    try:
-        # Check if there is a change in the data
-        if data != last_data:
-            last_data = data
-            print("Data has changed:")
-            print(json.dumps(data, indent=2))
-
-            # You can access specific values from the data
-            key_value = data.get("user")
-            print("Value of 'user':", key_value)
-
-            return jsonify({"status": "success"})
-
-    except Exception as e:
-        print("Error:", e)
-
-    return jsonify({"status": "failed"})
-
-@app.route(data_endpoint, methods=['GET'])
-def get_data():
-    global last_data
-    return jsonify(last_data)
-
-# if __name__ == '__main__':
-#     app.run(debug=True)
-
-
-if __name__ == '__main__':
-    
-    app.run(debug=True, port=5000)
