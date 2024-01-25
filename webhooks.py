@@ -28,7 +28,7 @@ app = Flask(__name__)
 
 @app.route("/alamon", methods=['POST'])
 def webhook():
-    global last_data
+    # global last_data
     data = request.get_json()
     # main(data)
     return jsonify({"status": "Data posted", "data": data})
