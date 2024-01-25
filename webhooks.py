@@ -14,22 +14,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 # Create a logger instance
 logger = logging.getLogger(__name__)
-# data_endpoint = "/data"
 
-# last_data = None
-
-# def main(data):
-#     print("Data")
-#     print("Data has changed:")
-#     print(json.dumps(data))
-#     key_values = []
-#     # data = webhook()
-#     for each_data in data:
-#         key_value = each_data.get("user")
-#         key_values.append(key_value)
-#         print("Value of 'user':", key_value)
-#     print(key_values)
-#     return key_values
         
 
 @app.route("/alamon", methods=['POST'])
@@ -54,6 +39,22 @@ def webhook():
     #     print("Error:", e)
 
     # return jsonify({"status": "Data posted"})
+    # data_endpoint = "/data"
+
+# last_data = None
+
+# def main(data):
+#     print("Data")
+#     print("Data has changed:")
+#     print(json.dumps(data))
+#     key_values = []
+#     # data = webhook()
+#     for each_data in data:
+#         key_value = each_data.get("user")
+#         key_values.append(key_value)
+#         print("Value of 'user':", key_value)
+#     print(key_values)
+#     return key_values
 
 
 if __name__ == '__main__':
