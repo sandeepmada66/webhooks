@@ -1,6 +1,7 @@
 import requests
 from flask import Flask, request, jsonify
 import json
+import logging
 # from get_webhook_data import main
 # app = Flask(__name__)
 
@@ -8,6 +9,11 @@ import json
 # from flask import Flask, request, jsonify
 
 app = Flask(__name__)
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+# Create a logger instance
+logger = logging.getLogger(__name__)
 # data_endpoint = "/data"
 
 # last_data = None
@@ -29,9 +35,12 @@ app = Flask(__name__)
 @app.route("/alamon", methods=['POST'])
 def webhook():
     # global last_data
-    data = request.get_json()
-    # main(data)
-    return jsonify({"status": "Data posted", "data": data})
+    payload = request.json
+    logger.info("Received payload for Evo webhook: %s", payload)
+    return payload
+    # data = request.get_json()
+    # # main(data)
+    # return jsonify({"status": "Data posted", "data": data})
     # try:
     #         print("Data has changed:")
     #         print(json.dumps(data))
