@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 @app.route("/alamon", methods=['POST'])
 def webhook():
     # global last_data
-    payload = request.json
+    payload = request.get_data(as_text=True)
     logger.info("Received payload for Evo webhook: %s", payload)
     return payload
     # data = request.get_json()
@@ -58,5 +58,4 @@ def webhook():
 
 
 if __name__ == '__main__':
-    
-    app.run()
+    app.run(host='0.0.0.0', port=5000)
